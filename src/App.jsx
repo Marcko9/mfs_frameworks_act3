@@ -3,16 +3,16 @@ import { NavBar } from './components/NavBar.jsx'
 import { SearchBar } from './components/SearchBar'
 import { PostList } from './components/PostList'
 import { Profile } from './components/Profile'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { Login } from './components/Login'
 
 function App() {
 
   const [showProfile, setShowProfile] = useState(false);
-
   const [showWebDetail, setShowWebDetail] = useState(true);
-
   const [searchValue, setSearchValue] = useState(null);
-
+  const [loginOk, setLoginOk] = useState(false);
+  
 
   const onProfileClick = () => {
         console.log('onProfileClick');
@@ -22,19 +22,39 @@ function App() {
             setShowWebDetail(false);
             setShowProfile(true);
         }
-    }
+  }
 
-    const onLogoClick = () => {
-        console.log('onLogoClick');
-        console.log({showWebDetail});
-        console.log({showProfile});
-        if(!showWebDetail){
-            setShowWebDetail(true);
-            setShowProfile(false);
-        }
-    }
+  const onLogoClick = () => {
+      console.log('onLogoClick');
+      console.log({showWebDetail});
+      console.log({showProfile});
+      if(!showWebDetail){
+          setShowWebDetail(true);
+          setShowProfile(false);
+      }
+  }
 
+  const onLoginComplete = () => {
+    setLoginOk(true);
+  }
   
+
+  useEffect(() => {
+      if(localStorage.getItem('token')){
+        console.log('Usuario logeado');
+        setLoginOk(true);
+      }
+     
+  }, [])
+
+  //console.log({loginOk});
+  if(!loginOk){
+    return(
+      <>
+        <Login onLoginComplete={onLoginComplete}></Login>
+      </>
+    );
+  }  
   
   return (
     <>
@@ -62,6 +82,7 @@ function App() {
       
     </>
   )
+  
 }
 
 export default App

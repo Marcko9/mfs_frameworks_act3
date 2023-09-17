@@ -6,9 +6,11 @@ export const PostList = ({searchValue}) => {
 
     const [posts, setPosts] = useState(null);
     useEffect(() => {
+        //getPosts().then((posts) => setPosts(posts));
         getPosts().then((posts) => setPosts(posts));
     }, [])
 
+    console.log({posts});
     if(!posts){
         return (
             <div className="p-5 text-center">
@@ -26,10 +28,11 @@ export const PostList = ({searchValue}) => {
             .map((post) => (
                 <Post 
                 key={post.id} 
-                createdAt={post.createdAt} 
-                autor={post.autor} 
+                createdAt={ (new Date(post.createdAt).toDateString())} 
+                author={post.author.name} 
                 text={post.text} 
-                comments={post.comments} 
+                comments={Object.keys(post.comments).length} 
+                //comments={0} 
                 image={post.image} 
                 likes={post.likes}
             />
