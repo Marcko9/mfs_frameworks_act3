@@ -39,7 +39,9 @@ export const Login = ({loginOk, onLoginComplete}) => {
             if(response.ok){
                 const {token} = await response.json();
                 // const data = await response.json();
-                localStorage.setItem("token",JSON.stringify(token).slice(1,-1));
+                console.log({token});
+                localStorage.setItem("token", token);
+                //localStorage.setItem("token",JSON.stringify(token).slice(1,-1));
                 onLoginComplete(true);
             }
             else{
